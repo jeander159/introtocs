@@ -13,11 +13,17 @@ Secuencia:  0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...
 
 Como ejercicio adicional y completamente opcional, al terminar de resolver este problema pueden intentar definir funciones que logren los mismos resultados pero de manera iterativa.
 */
-
 function nFactorial(n) {
+  if(n === 1 || n === 0) return 1;
+  else if (n < 0) return 'No se puede realizar factorial de un numero negativo';
+  return n * nFactorial(n-1);
 }
 
-function nFibonacci(n) {
+function nFibonacci(n) {//7
+  if(n === 0) return 0;
+  else if(n === 1) return 1;
+  else if (n < 0) return 'No se aceptan numeros negativos';
+  return nFibonacci(n-2) + nFibonacci(n-1);
 }
 
 /*
@@ -29,8 +35,20 @@ Implementar la clase Queue, sabiendo que es una estructura de tipo FIFO, donde e
 Pueden utilizar class o función constructora.
 */
 
-function Queue() {
+class Queue{
 
+  constructor(){
+    this.queue = [];
+  }
+  enqueue(value){
+    this.queue.push(value);
+  }
+  dequeue(){
+    return this.queue.shift();
+  }
+  size(){
+		return this.queue.length
+  }
 }
 
 // No modifiquen nada debajo de esta linea
