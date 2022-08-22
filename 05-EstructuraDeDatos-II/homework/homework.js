@@ -11,9 +11,81 @@ Implementar la clase LinkedList, definiendo los siguientes métodos:
   En caso de que la búsqueda no arroje resultados, search debe retornar null.
 */
 
-function LinkedList() {}
+// function LinkedList() {}
 
-function Node(value) {}
+class LinkedList{
+  constructor(){
+    this.head = null;
+  }
+  
+  add(value){
+    let newNode = new Node(value);
+    let current = this.head;
+
+    if(!current){
+      this.head = newNode;
+      return newNode;
+      
+    }
+
+    while(current.next){
+      current = current.next;
+    }
+
+    current.next = newNode;
+    return newNode;
+
+  }
+  remove(){
+    let current = this.head
+    //si la lista  esta vacia
+    if(!current) return null;
+
+    //en el caso de qeu la lista tenga un elemento o nodos
+    if(!current.next){
+      let returnValue = current.value;
+      this.head = null;
+      return returnValue;
+    } 
+    
+    //si la lista tiene varios elementos o nodos
+    while(current.next.next){
+      current = current.next
+    }
+    let returnValue = current.next.value
+    current.next = null;
+    return returnValue;
+
+    
+  }
+  search(arg){
+      let current = this.head;
+     
+      while(current){
+
+          if(typeof arg === 'string'){
+            if(current.value === arg){
+              return arg;
+            }
+          }else{
+              if(arg(current.value)){
+                return current.value;
+              }
+          }
+          
+          current = current.next;
+      }
+      return null;
+  }
+}
+
+class Node{
+  constructor(value){
+    this.value = value
+    this.next = null
+  }
+}
+// function Node(value) {}
 
 /*
 Implementar la clase HashTable.
@@ -30,7 +102,42 @@ La clase debe tener los siguientes métodos:
 Ejemplo: supongamos que quiero guardar {instructora: 'Ani'} en la tabla. Primero puedo chequear, con hasKey, si ya hay algo en la tabla con el nombre 'instructora'; luego, invocando set('instructora', 'Ani'), se almacenará el par clave-valor en un bucket específico (determinado al hashear la clave)
 */
 
-function HashTable() {}
+// function HashTable() {}
+class HashTable{
+  constructor(){
+    this.buckets = [];
+    this.numBuckets = 35;
+  }
+  hash(input){
+    
+    let suma = 0;
+    for(let i of input){
+      suma += i.charCodeAt(0);
+    }
+    return suma % this.numBuckets;
+  }
+  set(key,value){
+    let hashKey = this.hash(key);
+
+    if(!this.buckets[hashKey]){
+    	this.buckets[hashKey]={}
+    }
+    this.buckets[hashKey][key] = value;
+   
+  }
+  get(key){
+    let hashKey = this.hash(key);
+    return this.buckets[hashKey][key];
+  }
+  hasKey(key){
+    let hashKey = this.hash(key);
+    if(this.buckets[hashKey].hasOwnProperty(key)){
+      return true;
+    }
+    return false;
+  }
+}
+
 
 // No modifiquen nada debajo de esta linea
 // --------------------------------
